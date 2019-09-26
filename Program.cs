@@ -37,8 +37,6 @@ namespace AutoClick
             backThread.DoWork += Thread_PerformBackgroundWork;
             backThread.RunWorkerAsync();
 
-            //BeginListening();
-
             // Start a timer to perform clicks at set location every set minutes.
             StartTimer(minutesAsMilliseconds);
 
