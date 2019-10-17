@@ -148,6 +148,8 @@ namespace AutoClick
             ClickLocation = new Point(x, y);
             WaitMinutes = time;
 
+            ClickType = (ClickType)cboClickType.SelectedItem;
+
             return true;
         }
 

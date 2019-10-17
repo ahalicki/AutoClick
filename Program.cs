@@ -25,17 +25,15 @@ namespace AutoClick
 
         #endregion
 
-        static void Main()
+        private static void Main()
         {
             InitializeSettings();
 
             // Convert minutes to milliseconds.
             double minutesAsMilliseconds = (mWaitMinutes * 60000);
 
-            // Run background thread to listen for keystrokes and draw on desktop.
-            var backThread = new BackgroundWorker();
-            backThread.DoWork += Thread_PerformBackgroundWork;
-            backThread.RunWorkerAsync();
+            // Run an infinite background thread to listen for keystrokes and draw on desktop.
+           Task.Run(Thread_PerformBackgroundWork);
 
             // Start a timer to perform clicks at set location every set minutes.
             StartTimer(minutesAsMilliseconds);
@@ -44,7 +42,8 @@ namespace AutoClick
             DisplayInstructions(minutesAsMilliseconds);
 
             // Uncomment to hide console window if desired. 
-            // However, this leaves no options for "ending" the program.
+            // However, this currently leaves no options for "ending" 
+            // the program for the user.
             //HideConsoleWindow();
 
             Thread.Sleep(Timeout.Infinite);
@@ -96,7 +95,7 @@ namespace AutoClick
             }
         }
 
-        static void Thread_PerformBackgroundWork(object sender, DoWorkEventArgs e)
+        private static void Thread_PerformBackgroundWork()
         {
             // Keep looping to read for user input.
             while (true)
@@ -120,14 +119,14 @@ namespace AutoClick
             }
         }
 
-        static void StartTimer(double ElapseTime)
+        private static void StartTimer(double ElapseTime)
         {
             var timer = new System.Timers.Timer(ElapseTime);
             timer.Elapsed += (s, e) => DoMouseClick(mClickCoordinates);
             timer.Start();
         }
 
-        static void DoMouseClick(Point location)
+        private static void DoMouseClick(Point location)
         {
             var pt = location == null ?
                     new Point(200, 855) :
@@ -152,7 +151,7 @@ namespace AutoClick
             }
         }
 
-        static void DrawCoordinates(Point pt)
+        private static void DrawCoordinates(Point pt)
         {
             using (Graphics g = Graphics.FromHwnd(IntPtr.Zero))
             {
@@ -165,15 +164,17 @@ namespace AutoClick
         /// <summary>
         /// Hides the console window.
         /// </summary>
-        static void HideConsoleWindow()
+        private static void HideConsoleWindow()
         {
             var hWnd = System.Diagnostics.Process.GetCurrentProcess()
                                                  .MainWindowHandle;
+
+            // Protect against hiding the main window
+            // on accident.
             if (hWnd != IntPtr.Zero)
             {
                 // Hide the window.
-                // 0 = SW_HIDE in win32 messages.
-                Win32Interops.ShowWindow(hWnd, 0);
+                Win32Interops.ShowWindow(hWnd, 0); // (0 = SW_HIDE in win32 messages).
             }
         }
 

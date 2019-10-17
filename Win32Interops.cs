@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoClick
 {
@@ -15,20 +11,25 @@ namespace AutoClick
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         [DllImport("user32.dll")]
         public static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
+        [DllImport("user32.dll")]
+        public static extern void SendInput(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
 
         #endregion
 
+        /// <summary>
+        /// see <ref="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-mouse_event" />
+        /// </summary>
         [Flags]
         public enum MouseEventFlags
         {
-            LEFTDOWN = 0x00000002,
-            LEFTUP = 0x00000004,
-            MIDDLEDOWN = 0x00000020,
-            MIDDLEUP = 0x00000040,
-            MOVE = 0x00000001,
-            ABSOLUTE = 0x00008000,
-            RIGHTDOWN = 0x00000008,
-            RIGHTUP = 0x00000010
+            LEFTDOWN = 0x0002,
+            LEFTUP = 0x0004,
+            MIDDLEDOWN = 0x0020,
+            MIDDLEUP = 0x0040,
+            MOVE = 0x0001,
+            ABSOLUTE = 0x8000,
+            RIGHTDOWN = 0x0008,
+            RIGHTUP = 0x0010
         }
     }
 }

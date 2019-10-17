@@ -1,0 +1,8 @@
+C:\Source\AutoClick\bin\Release\AutoClick.exe.config
+C:\Source\AutoClick\bin\Release\AutoClick.exe
+C:\Source\AutoClick\bin\Release\AutoClick.pdb
+C:\Source\AutoClick\obj\Release\AutoClick.Properties.Resources.resources
+C:\Source\AutoClick\obj\Release\AutoClick.SettingsForm.resources
+C:\Source\AutoClick\obj\Release\AutoClick.csproj.GenerateResource.cache
+C:\Source\AutoClick\obj\Release\AutoClick.exe
+C:\Source\AutoClick\obj\Release\AutoClick.pdb
